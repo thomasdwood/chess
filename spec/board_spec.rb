@@ -1,9 +1,11 @@
 require './lib/board.rb'
 
 RSpec.describe Board do
+  test = Board.new
+  board = test.instance_variable_get(:@board)
+  
   context 'When New Game Started' do
-    test = Board.new
-    board = test.instance_variable_get(:@board)
+    
 
     describe 'places all the black pieces' do
       it 'places only black pieces' do
@@ -59,5 +61,21 @@ RSpec.describe Board do
     end
     
   end
+
+  context 'When a move is submitted' do
+    it 'correctly identifies gibberish coordinates' do
+      response = test.submit_move("what am i doing?", :white)
+      expect(response[:valid]).to be false
+      response = test.submit_move("1133", :white)
+      expect(response[:valid]).to be false
+      response = test.submit_move("AGFD", :white)
+      expect(response[:valid]).to be false
+    end 
+
+    it 'correctly identifies if starting coordinates have no piece'
+    it "won't move a piece if it isn't that player's turn"
+    
+  end
+
 end
 

@@ -6,4 +6,7 @@ class Piece
     @team = team
   end
 
+  def name
+    self.class.name
+  end
 end

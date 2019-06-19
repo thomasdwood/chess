@@ -16,6 +16,13 @@ class Board
     @board = generate_board
   end
 
+  def to_s
+    #this method is only for testing
+
+    @board.each { |row| puts row.to_s } 
+    
+  end
+
   def state 
     white = "                        WHITE"
     black = "                        BLACK"
@@ -45,6 +52,25 @@ class Board
     puts ""
     puts white
 
+  end
+
+  def submit_move(move, team)
+    
+    start = translate_user_input(move[0..1])
+    finish = translate_user_input(move[-2..-1])
+
+    return invalid_move(:invalid_coordinates) if start.include?(-1) || finish.include?(-1)
+
+    piece = @board[start[0]][start[1]]
+    
+    return invalid_move(:no_piece) if piece.nil? 
+    return invalid_move(:wrong_color) if piece.team != team
+
+    @board[start[0]][start[1]] = nil
+    @board[finish[0]][finish[1]] = piece
+
+    return {:valid => true, :message => :normal, :piece => piece}
+    
   end
   
 
@@ -79,10 +105,9 @@ class Board
     blank_row = []
     white_rows = starting_rows(@white_pieces)
     black_rows = starting_rows(@black_pieces)
-    8.times { blank_row << nil }
     board << black_rows[0]
     board << black_rows[1]
-    4.times { board << blank_row }
+    4.times { board << [nil, nil, nil, nil, nil, nil, nil, nil] }
     board << white_rows[1]
     board << white_rows[0]
     board   
@@ -105,5 +130,55 @@ class Board
     [main_row, pawn_row]
   end 
   
+
+  def translate_user_input(input)
+
+    row = -1
+    col = -1
+    case input[0].to_i
+    when 1
+      row = 7
+    when 2
+      row = 6
+    when 3
+      row = 5
+    when 4
+      row = 4
+    when 5
+      row = 3
+    when 6
+      row = 2
+    when 7
+      row = 1
+    when 8
+      row = 0
+    end
+
+    case input[1]
+    when "a"
+      col = 0
+    when "b"
+      col = 1
+    when "c"
+      col = 2
+    when "d"
+      col = 3
+    when "e"
+      col = 4
+    when "f"
+      col = 5
+    when "g"
+      col = 6
+    when "h"
+      col = 7
+    end
+
+    [row, col]
+
+  end
+
+  def invalid_move(message)
+    {:valid => false, :message => message}
+  end
 end
 
