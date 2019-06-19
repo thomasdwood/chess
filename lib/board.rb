@@ -58,7 +58,8 @@ class Board
     
     start = translate_user_input(move[0..1])
     finish = translate_user_input(move[-2..-1])
-
+    
+    return invalid_move(:same_spot) if start == finish
     return invalid_move(:invalid_coordinates) if start.include?(-1) || finish.include?(-1)
 
     piece = @board[start[0]][start[1]]
@@ -181,4 +182,8 @@ class Board
     {:valid => false, :message => message}
   end
 end
+
+board = Board.new
+
+
 

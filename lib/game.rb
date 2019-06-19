@@ -24,8 +24,6 @@ class Game
         response = @board.submit_move(move, turn)
         interpret(response, move)
       end
-
-      @board.to_s
     end
 
   end
@@ -51,6 +49,8 @@ class Game
         puts "There was no piece at coordinates #{move[0]}#{move[1]}. Please enter valid coordinates, starting with the row. For help type 'help'."
       when :wrong_color
         puts "The piece at coordinates #{move[0]}#{move[1]} are not #{turn}. Please enter valid coordinates, starting with the row. For help type 'help'."
+      else
+        puts "Some error has occured and the move was not recorded. Error code: #{response[:message]}"
       end
       puts  "Please enter valid coordinates, starting with the row. For help type 'help'."
     else 
@@ -58,6 +58,7 @@ class Game
       when :normal
         "Successfully moved #{turn}'s #{response[:piece].name} to #{move[-2]}#{move[-1]}"
       end
+      @white_turn = !@white_turn
     end
   end
 end
