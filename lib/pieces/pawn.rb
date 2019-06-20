@@ -6,7 +6,17 @@ class Pawn < Piece
     @team == :white ? "♙" : "♟"
   end
 
-  def possible_moves
-    @@all_possible_moves[:pawn]
+  def moves
+    moves = {
+      :direction => [@team == :white ? @@directions[:south] : @@directions[:north]],
+      :spaces => 1,
+      :special_moves => :first_move_double
+    }
+
+    
+
+
+    
+    moves
   end
 end

@@ -20,6 +20,11 @@ class Game
       case move
       when 'help'
         get_help
+      when nil
+        next
+      when 'skip'
+        @white_turn = !@white_turn
+        
       else
         response = @board.submit_move(move, turn)
         interpret(response, move)
@@ -54,10 +59,10 @@ class Game
       end
       puts  "Please enter valid coordinates, starting with the row. For help type 'help'."
     else 
-      case response[:message]
-      when :normal
-        "Successfully moved #{turn}'s #{response[:piece].name} to #{move[-2]}#{move[-1]}"
-      end
+      message = "Successfully moved #{turn}'s #{response[:piece].name} to #{move[-2]}#{move[-1]}"
+      message += " and captured #{turn}'s #{response[:captured].name}'" if response[:message] == :captured
+      message += "."
+      puts message
       @white_turn = !@white_turn
     end
   end

@@ -1,15 +1,20 @@
 class Rook < Piece
 
-  def possible_moves
-    moves = []
-
-    moves << @@all_possible_moves[:north]
-    moves << @@all_possible_moves[:east]
-    moves << @@all_possible_moves[:south]
-    moves << @@all_possible_moves[:west]
-    moves.flatten(1)
-  end
   def sym 
     @team == :white ? "♖" : "♜"
+  end
+
+  def moves
+    moves = {
+      :direction => [],
+      :spaces => 7,
+      :special_moves => :none
+    }
+    
+    moves[:direction] << @@directions[:north]
+    moves[:direction] << @@directions[:south]
+    moves[:direction] << @@directions[:west]
+    moves[:direction] << @@directions[:east]
+    moves
   end
 end

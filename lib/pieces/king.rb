@@ -6,8 +6,15 @@ class King < Piece
     @team == :white ? "♔" : "♚"
   end
 
-  def possible_moves
-    @@all_possible_moves[:king]
+  def moves
+    moves = {
+      :direction => [],
+      :spaces => 1,
+      :special_moves => :castle
+    }
+
+    @@directions.each { |key, val| moves[:direction] << val }
+    moves
   end
 
 end

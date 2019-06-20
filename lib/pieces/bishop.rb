@@ -5,13 +5,17 @@ class Bishop < Piece
     @team == :white ? "♗" : "♝"
   end
 
-  def possible_moves
-    moves = []
-    moves << @@all_possible_moves[:northwest]
-    moves << @@all_possible_moves[:northeast]
-    moves << @@all_possible_moves[:southwest]
-    moves << @@all_possible_moves[:southeast]
-    moves.flatten(1)
+  def moves
+    moves = {
+      :direction => [],
+      :spaces => 7,
+      :special_moves => :none
+    }
+    moves[:direction] << @@directions[:northwest]
+    moves[:direction] << @@directions[:northeast]
+    moves[:direction] << @@directions[:southwest]
+    moves[:direction] << @@directions[:southeast]
+    moves
   end
 
 end
